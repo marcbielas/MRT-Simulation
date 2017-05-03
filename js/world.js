@@ -16,7 +16,7 @@ var World = Class.extend({
             material = new THREE.MeshLambertMaterial(
                 {}),
             i;
-
+            
         // Set the "world" modelisation object
         this.mesh = new THREE.Object3D();
         // Set and add the ground

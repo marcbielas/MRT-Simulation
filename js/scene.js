@@ -177,6 +177,8 @@ var BasicScene = Class.extend({
             this.camera.position.set(object.position.x, object.position.y + 128, object.position.z -1000);
             this.camera.lookAt(object.position);
         }
+        console.log(object.position);
+
     },
     // Update and draw the scene
     frame: function() {
