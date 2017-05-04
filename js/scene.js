@@ -217,7 +217,12 @@ var BasicScene = Class.extend({
         rightangle = rightangle/totalangle;
 
         //import temps
-
+        $('#c-perc').val((ceilingangle*100).toFixed(2));
+        $('#fr-perc').val((frontangle*100).toFixed(2));
+        $('#l-perc').val((leftangle*100).toFixed(2));
+        $('#fl-perc').val((floorangle*100).toFixed(2));
+        $('#r-perc').val((rightangle*100).toFixed(2));
+        $('#b-perc').val((backangle*100).toFixed(2));
         var ceilingtemp = $('#ceiling-temp').val();
         var fronttemp = $('#front-temp').val();
         var lefttemp = $('#left-temp').val();
