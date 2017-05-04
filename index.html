@@ -11,6 +11,7 @@
         <script src="js/world.js" type="text/javascript"></script>
         <script src="js/character.js" type="text/javascript"></script>
         <script src="js/vector.js" type="text/javascript"></script>
+        <script src="js/mrt-calculation.js" type="text/javascript"></script>
         <style>
             html, body {
                 margin: 0px;
@@ -23,21 +24,70 @@
     </head>
     <body>
         <h1 style="text-align: center">Mean Radiant Temperature</h1>
-        <form action=""> Change Camera:
+
+        <p id="temperatures" style="text-align: center;"> Input Surface Temperatures (&#8457;):<br>
+            (Recommended 67&#8457;-82&#8457; ASHRAE Standard 55-2013) <br><br>
+            <input id="ceiling-temp" type="number" placeholder="Ceiling" style="text-align: center; width: 80px; height: 80px"><br>
+            <input id="front-temp" type="number" placeholder="Front" style="text-align: center; width: 80px; height: 80px"><br>
+            <input id="left-temp" type="number" placeholder="Left" style="text-align: center; width: 80px; height: 80px;"> 
+            <input id="floor-temp" type="number" placeholder="Floor" style="text-align: center; width: 80px; height: 80px"> 
+            <input id="right-temp" type="number" placeholder="Right" style="text-align: center; width: 80px; height: 80px"><br>
+            <input id="back-temp" type="number" placeholder="Back" style="text-align: center;  width: 80px; height: 80px"> </p>
+        
+        <p style="text-align: center;"> Start <input id="start" type="button" onClick="start()"></p>
+        <p style="text-align: center;"> Reset Temperature <input id="resettemp" type="button" onClick="reset()"></p>
+
+        <form  style="text-align: center;" action=""> Change Camera:
             <input type="radio" name="camera" value="perspective" > Perspective
             <input type="radio" name="camera" value="plan"> Plan<br>
         </form>
-
         <div id="basic-scene">
             <canvas style="width: 100px; height: 100px;"></canvas> 
         </div>
+        <div style="text-align: center; visibility: hidden;" id ="mrt_display">
+            MEAN RADIANT TEMPERATURE: <input style="width: 30px;" id="mrt" readonly>&#8457;<br>
+            <hr size="30" style="color: black; background-color: black;">
+        </div>
+        <div id="input_temps" style="text-align:center; visibility: hidden;">
+            <p> Ceiling Temperature: <input style="width: 30px;" id="c-temp" readonly>&#8457; <br>
+                Front Wall Temperature: <input style="width: 30px;" id="fr-temp" readonly>&#8457;<br>
+                Left Wall Temperature: <input style="width: 30px;" id="l-temp" readonly>&#8457; <br>
+                Floor Wall Temperature: <input style="width: 30px;" id="fl-temp" readonly>&#8457; <br>
+                Right Wall Temperature: <input style="width: 30px;" id="r-temp" readonly>&#8457; <br>
+                Back Wall Temperature: <input style="width: 30px;" id="b-temp" readonly>&#8457; <br>
+            </p>
+        </div>
         <script>
-            basicScene = new BasicScene;
-            function animate() {
-                requestAnimationFrame(animate);
-                basicScene.frame();
+            function start() {
+                document.getElementById("temperatures").style.display = "none";
+                document.getElementById("input_temps").style.visibility = "visible";
+                document.getElementById("mrt_display").style.visibility = "visible";
+                document.getElementById("c-temp").value = document.getElementById("ceiling-temp").value;
+                document.getElementById("fr-temp").value = document.getElementById("front-temp").value;
+                document.getElementById("l-temp").value = document.getElementById("left-temp").value;
+                document.getElementById("fl-temp").value = document.getElementById("floor-temp").value;
+                document.getElementById("r-temp").value = document.getElementById("right-temp").value;
+                document.getElementById("b-temp").value = document.getElementById("back-temp").value;
+                if (!basicScene){
+                    basicScene = new BasicScene;
+                    function animate() {
+                        requestAnimationFrame(animate);
+                        basicScene.frame();
+                    }
+                    animate();
+                }
             }
-            animate();
+            function reset() {
+                document.getElementById("temperatures").style.display = "block";
+                document.getElementById("input_temps").style.visibility = "hidden";
+                document.getElementById("mrt_display").style.visibility = "hidden";
+                document.getElementById("c-temp").value = document.getElementById("ceiling-temp").value ='';
+                document.getElementById("fr-temp").value = document.getElementById("front-temp").value = '';
+                document.getElementById("l-temp").value = document.getElementById("left-temp").value = '';
+                document.getElementById("fl-temp").value = document.getElementById("floor-temp").value = '';
+                document.getElementById("r-temp").value = document.getElementById("right-temp").value = '';
+                document.getElementById("b-temp").value = document.getElementById("back-temp").value = '';
+            }
         </script>
     </body>
 </html>

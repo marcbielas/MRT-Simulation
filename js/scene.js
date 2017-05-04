@@ -155,9 +155,9 @@ var BasicScene = Class.extend({
         'use strict';
 
         // Fit the container's full width
-        var w = this.container.width(),
+        var w = 1000,
                 // Fit the initial visible area's height
-                h = jQuery(window).height();
+                h = 500;
 
         // Update the renderer and the camera
         this.renderer.setSize(w, h);
@@ -177,7 +177,60 @@ var BasicScene = Class.extend({
             this.camera.position.set(object.position.x, object.position.y + 128, object.position.z -1000);
             this.camera.lookAt(object.position);
         }
-        console.log(object.position);
+       // console.log(object.position);
+
+    },
+    computeMRT: function(user) {
+        'use strict';
+        var height = 375 
+        var width = 1000; 
+        var length = 1000;
+        //place corner of room on 0,0
+        var x = user.position.x + 500;
+        var y = 125; //mid-height of human
+        var z = user.position.z + 500;
+
+        var floorangle = calculate_wall_angle(x, z, y, width, length, height);
+        var ceilingangle = calculate_wall_angle(x, z, (height - y), width, length, height);
+        var frontangle = calculate_wall_angle(x, y, z, width, height, length);
+        var backangle = calculate_wall_angle(x, y, (length - z), width, height, length);
+        var leftangle = calculate_wall_angle(z, y, x, length, height, width);
+        var rightangle = calculate_wall_angle(z, y, (width - x), length, height, width);
+
+        var totalangle = ceilingangle+floorangle+frontangle+backangle+leftangle+rightangle;
+
+        //to percentage (total angle = 1)
+        floorangle = floorangle/totalangle;
+        ceilingangle = ceilingangle/totalangle;
+        frontangle = frontangle/totalangle;
+        backangle = backangle/totalangle;
+        leftangle = leftangle/totalangle;
+        rightangle = rightangle/totalangle;
+
+        //import temps
+
+        var ceilingtemp = $('#ceiling-temp').val();
+        var fronttemp = $('#front-temp').val();
+        var lefttemp = $('#left-temp').val();
+        var floortemp = $('#floor-temp').val();
+        var righttemp = $('#right-temp').val();
+        var backtemp = $('#back-temp').val();
+
+        //set up temp ^ 4 * radiant angle
+
+        var ceiling = ceilingangle * Math.pow(ceilingtemp, 4);
+        var front = frontangle * Math.pow(fronttemp, 4);
+        var left = leftangle * Math.pow(lefttemp, 4);
+        var floor = floorangle * Math.pow(floortemp, 4);
+        var right = rightangle * Math.pow(righttemp, 4);
+        var back = backangle * Math.pow(backtemp, 4);
+
+        //calculate MRT
+
+        var mrt = Math.pow((ceiling + front + left + floor + right + back), 0.25);
+        $('#mrt').val(mrt);
+
+
 
     },
     // Update and draw the scene
@@ -188,6 +241,7 @@ var BasicScene = Class.extend({
         
         this.setFocus(this.user.mesh)
         // And draw !
+        this.computeMRT(this.user.mesh)
         this.renderer.render(this.scene, this.camera);
     }
 });
