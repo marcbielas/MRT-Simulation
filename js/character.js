@@ -39,14 +39,6 @@ var Character = Class.extend({
         arm.applyMatrix(new THREE.Matrix4().makeTranslation( 0, -50, 0 ) );
         leg.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -50, 0 ) );
 
-        // var legsandfeet = new THREE.Geometry();
-        // // var footmesh = new THREE.Mesh(foot);
-        // // var legmesh = new THREE.Mesh(leg);
-        // foot.applyMatrix( new THREE.Matrix4().makeTranslation(0, 0, 10) );
-        // legsandfeet.merge(foot.geometry, foot.matrix);
-        // leg.applyMatrix( new THREE.Matrix4().makeTranslation(0, 116, 0) );
-        // legsandfeet.merge(leg.geometry, leg.matrix, 1);
-
         // Set the character modelisation object
         this.mesh = new THREE.Object3D();
         this.mesh.position.y = 0;
@@ -84,19 +76,6 @@ var Character = Class.extend({
         this.mesh.add(this.legs.left);
         this.mesh.add(this.legs.right);
 
-        // Set and add its feet
-        // this.feet = {
-        //     left: new THREE.Mesh(foot, material),
-        //     right: new THREE.Mesh(foot, material)
-        // };
-        // this.feet.left.position.x = -20;
-        // this.feet.left.position.y = this.legs.left.position.y-116;
-        // this.feet.left.rotation.y = Math.PI / 4;
-        // this.feet.right.position.x = 20;
-        // this.feet.right.position.y = this.legs.right.position.y-116;
-        // this.feet.right.rotation.y = Math.PI / 4;
-        // this.mesh.add(this.feet.left);
-        // this.mesh.add(this.feet.right);
         // Set and add its nose
         this.nose = new THREE.Mesh(nose, material);
         this.nose.position.y = 230;
@@ -220,7 +199,7 @@ var Character = Class.extend({
         else
         {
             if (this.controls.up) {
-            this.mesh.translateZ(this.WALK_SPEED);
+                this.mesh.translateZ(this.WALK_SPEED);
             } else if (this.controls.down) {
                 this.mesh.translateZ(-this.WALK_SPEED);
             }
@@ -232,7 +211,6 @@ var Character = Class.extend({
             this.legs.right.rotation.setX(Math.cos(this.step + (Math.PI / 2)) / 2);
             this.head.translateY(Math.sin(this.step) / 2);
             this.torso.translateY(-Math.sin(this.step) / 2);
-            
             this.arms.left.rotation.setX(Math.sin(-this.step) / 2);
             this.arms.right.rotation.setX(Math.cos(this.step - (Math.PI / 2)) / 2);
         }
