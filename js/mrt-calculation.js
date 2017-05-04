@@ -2,11 +2,12 @@ function calculate_wall_angle(x,y,z, width, height, length) {
 
 	//user coordinates from zero
 
-	console.log("Input Values:", x, y, z, height, width, length);
+	//console.log("Input Values:", x, y, z, height, width, length);
 
 	//create vectors
 	//Front ABCD there are 8 subvectors 
 	//var topright = vector to A, Vector to B, Vector to C
+	var origin = new THREE.Vector3( x, y, z );
 	var vectors_to_face = [
 		a_vec = 
 		{

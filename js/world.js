@@ -13,20 +13,32 @@ var World = Class.extend({
             ],
             obstacles = [],
             // Set the material, the "skin"
-            material = new THREE.MeshLambertMaterial(
-                {}),
+            leftmaterial = new THREE.MeshLambertMaterial(
+                {color: 0xff0000}),
+            floormaterial = new THREE.MeshLambertMaterial(
+                {color: 0xffff00}),
+            frontmaterial = new THREE.MeshLambertMaterial(
+                {color: 0x00ff00}),
+            rightmaterial = new THREE.MeshLambertMaterial(
+                {color: 0x0000ff}),
+            backmaterial = new THREE.MeshLambertMaterial(
+                {color: 0xff00ff}),
             i;
             
         // Set the "world" modelisation object
         this.mesh = new THREE.Object3D();
         // Set and add the ground
-        this.ground = new THREE.Mesh(ground, material);
+        this.ground = new THREE.Mesh(ground, floormaterial);
         this.ground.rotation.x = -Math.PI / 2;
         this.mesh.add(this.ground);
         // Set and add the walls
         this.walls = [];
+        this.walls[0] = new THREE.Mesh(walls[0], leftmaterial);
+        this.walls[1] = new THREE.Mesh(walls[1], frontmaterial);
+        this.walls[2] = new THREE.Mesh(walls[2], rightmaterial);
+        this.walls[3] = new THREE.Mesh(walls[3], backmaterial);
+
         for (i = 0; i < walls.length; i += 1) {
-            this.walls[i] = new THREE.Mesh(walls[i], material);
             this.walls[i].position.y = height / 2;
             this.mesh.add(this.walls[i]);
         }

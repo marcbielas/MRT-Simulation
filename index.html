@@ -34,12 +34,14 @@
             <input id="right-temp" type="number" placeholder="Right" style="text-align: center; width: 80px; height: 80px"><br>
             <input id="back-temp" type="number" placeholder="Back" style="text-align: center;  width: 80px; height: 80px"> </p>
         
-        <p style="text-align: center;"> Start <input id="start" type="button" onClick="start()"></p>
-        <p style="text-align: center;"> Reset Temperature <input id="resettemp" type="button" onClick="reset()"></p>
-
+        <p style="text-align: center;"> Start <input id="start" type="button" onClick="start()"> Reset Temperature <input id="resettemp" type="button" onClick="reset()"></p>
         <form  style="text-align: center;" action=""> Change Camera:
             <input type="radio" name="camera" value="perspective" > Perspective
             <input type="radio" name="camera" value="plan"> Plan<br>
+        </form>
+        <form  style="text-align: center;" action=""> Is the Person Sitting?
+            <input type="radio" name="sitting" value="yes" > Yes (movement disabled)
+            <input type="radio" name="sitting" value="no"> No<br>
         </form>
         <div id="basic-scene">
             <canvas style="width: 100px; height: 100px;"></canvas> 
@@ -49,16 +51,18 @@
             <hr size="30" style="color: black; background-color: black;">
         </div>
         <div id="input_temps" style="text-align:center; visibility: hidden;">
-            <p> Ceiling Temperature: <input style="width: 30px;" id="c-temp" readonly>&#8457; <br>
-                Front Wall Temperature: <input style="width: 30px;" id="fr-temp" readonly>&#8457;<br>
-                Left Wall Temperature: <input style="width: 30px;" id="l-temp" readonly>&#8457; <br>
-                Floor Wall Temperature: <input style="width: 30px;" id="fl-temp" readonly>&#8457; <br>
-                Right Wall Temperature: <input style="width: 30px;" id="r-temp" readonly>&#8457; <br>
-                Back Wall Temperature: <input style="width: 30px;" id="b-temp" readonly>&#8457; <br>
+            <p> Ceiling Temperature:  <input style="width: 30px;" id="c-temp" readonly>&#8457; <br>
+                Front Wall Temperature: (green) <input style="width: 30px;" id="fr-temp" readonly>&#8457;<br>
+                Left Wall Temperature: (red) <input style="width: 30px;" id="l-temp" readonly>&#8457; <br>
+                Floor Temperature: (yellow) <input style="width: 30px;" id="fl-temp" readonly>&#8457; <br>
+                Right Wall Temperature: (blue) <input style="width: 30px;" id="r-temp" readonly>&#8457; <br>
+                Back Wall Temperature: (purple) <input style="width: 30px;" id="b-temp" readonly>&#8457; <br>
             </p>
         </div>
         <script>
             function start() {
+
+                if (basicScene) {document.getElementById("basic-scene").style.display = "block";};
                 document.getElementById("temperatures").style.display = "none";
                 document.getElementById("input_temps").style.visibility = "visible";
                 document.getElementById("mrt_display").style.visibility = "visible";
@@ -78,6 +82,7 @@
                 }
             }
             function reset() {
+                document.getElementById("basic-scene").style.display = "none";
                 document.getElementById("temperatures").style.display = "block";
                 document.getElementById("input_temps").style.visibility = "hidden";
                 document.getElementById("mrt_display").style.visibility = "hidden";

@@ -189,33 +189,46 @@ var Character = Class.extend({
     // Rotate the character
     rotate: function() {
         'use strict';
+                if (($('input[name=sitting]:checked').val()) == "yes")
+        {
+            //do nothing
+        }
 
-        if (this.controls.left) {
-            this.mesh.rotation.y += this.ROTATION_SPEED;
-        } else if (this.controls.right) {
-            this.mesh.rotation.y -= this.ROTATION_SPEED;
+        else
+        {
+            if (this.controls.left) {
+                this.mesh.rotation.y += this.ROTATION_SPEED;
+            } else if (this.controls.right) {
+                this.mesh.rotation.y -= this.ROTATION_SPEED;
+            }
         }
     },
     move: function() {
         'use strict';
-
-        if (this.controls.up) {
-            this.mesh.translateZ(this.WALK_SPEED);
-        } else if (this.controls.down) {
-            this.mesh.translateZ(-this.WALK_SPEED);
+        if (($('input[name=sitting]:checked').val()) == "yes")
+        {
+            //do nothing
         }
 
-        // Now some animation trigonometry, using our "step" property ...
-        this.step += 0.25;
+        else
+        {
+            if (this.controls.up) {
+            this.mesh.translateZ(this.WALK_SPEED);
+            } else if (this.controls.down) {
+                this.mesh.translateZ(-this.WALK_SPEED);
+            }
+            // Now some animation trigonometry, using our "step" property ...
+            this.step += 0.25;
 
-        // ... to slightly move our feet and hands
-        this.legs.left.rotation.setX(Math.sin(this.step) / 2);
-        this.legs.right.rotation.setX(Math.cos(this.step + (Math.PI / 2)) / 2);
-        // this.feet.left.position.setZ(this.legs.left.position.z);
-        // this.feet.right.position.setZ(this.legs.left.position.z);
-        // this.feet.left.position.setZ(15+Math.sin(- this.step) * 32);
-        // this.feet.right.position.setZ(15+Math.cos(this.step - (Math.PI / 2)) * 32);
-        this.arms.left.rotation.setX(Math.sin(-this.step) / 2);
-        this.arms.right.rotation.setX(Math.cos(this.step - (Math.PI / 2)) / 2);
+            // ... to slightly move our feet and hands
+            this.legs.left.rotation.setX(Math.sin(this.step) / 2);
+            this.legs.right.rotation.setX(Math.cos(this.step + (Math.PI / 2)) / 2);
+            // this.feet.left.position.setZ(this.legs.left.position.z);
+            // this.feet.right.position.setZ(this.legs.left.position.z);
+            // this.feet.left.position.setZ(15+Math.sin(- this.step) * 32);
+            // this.feet.right.position.setZ(15+Math.cos(this.step - (Math.PI / 2)) * 32);
+            this.arms.left.rotation.setX(Math.sin(-this.step) / 2);
+            this.arms.right.rotation.setX(Math.cos(this.step - (Math.PI / 2)) / 2);
+        }
     },
 });

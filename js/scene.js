@@ -7,8 +7,8 @@ var BasicScene = Class.extend({
         // Create a scene, a camera, a light and a WebGL renderer with Three.JS
         this.scene = new THREE.Scene();
 
-        var VIEW_WIDTH = $('#basic-scene').outerWidth();
-        var VIEW_HEIGHT = $('#basic-scene').outerHeight();
+        var VIEW_WIDTH = 800;
+        var VIEW_HEIGHT = 400;
         var VIEW_ANGLE = 45;
         var ASPECT = VIEW_WIDTH / VIEW_HEIGHT;
         var NEAR = 0.1;
@@ -155,9 +155,9 @@ var BasicScene = Class.extend({
         'use strict';
 
         // Fit the container's full width
-        var w = 1000,
+        var w = 800,
                 // Fit the initial visible area's height
-                h = 500;
+                h = 400;
 
         // Update the renderer and the camera
         this.renderer.setSize(w, h);
@@ -189,6 +189,10 @@ var BasicScene = Class.extend({
         var x = user.position.x + 500;
         var y = 125; //mid-height of human
         var z = user.position.z + 500;
+        if (($('input[name=sitting]:checked').val()) == "yes")
+        {
+            y *=(2.0/3.0); //height of seated person is 2/3 standing person
+        }
 
         var floorangle = calculate_wall_angle(x, z, y, width, length, height);
         var ceilingangle = calculate_wall_angle(x, z, (height - y), width, length, height);
@@ -228,10 +232,8 @@ var BasicScene = Class.extend({
         //calculate MRT
 
         var mrt = Math.pow((ceiling + front + left + floor + right + back), 0.25);
+
         $('#mrt').val(mrt);
-
-
-
     },
     // Update and draw the scene
     frame: function() {
