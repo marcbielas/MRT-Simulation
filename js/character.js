@@ -34,7 +34,7 @@ var Character = Class.extend({
             //foot = new THREE.SphereGeometry(20, 4, 4, 0, Math.PI * 2, 0, Math.PI / 2),
             nose = new THREE.SphereGeometry(4, 4, 4),
             // Set the material, the "skin"
-            material = new THREE.MeshLambertMaterial({color: 0xffffff});
+            material = new THREE.MeshLambertMaterial(args);
 
         arm.applyMatrix(new THREE.Matrix4().makeTranslation( 0, -50, 0 ) );
         leg.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -50, 0 ) );

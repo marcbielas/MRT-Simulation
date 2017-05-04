@@ -1,3 +1,6 @@
+/*Initial environment based off of 
+https://github.com/WebMaestroFr/collisions-detection-three-js */
+
 var basicScene;
 var BasicScene = Class.extend({
     // Class constructor
@@ -27,7 +30,7 @@ var BasicScene = Class.extend({
 
         // Create the user's character
         this.user = new Character({
-            color: 0x7A43B6
+            color: 0xFFFAFA
         });
 
         this.scene.add(this.user.mesh);
