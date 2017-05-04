@@ -173,6 +173,11 @@ var BasicScene = Class.extend({
             this.camera.position.set(0, 4000, 0);
             this.camera.lookAt(new THREE.Vector3(0,0,0));
         }
+        else if (($('input[name=sitting]:checked').val()) == "yes") 
+        {
+            this.camera.position.set(object.position.x-1000, object.position.y + 128, object.position.z+500);
+            this.camera.lookAt(object.position);
+        }
         else {
             this.camera.position.set(object.position.x, object.position.y + 128, object.position.z -1000);
             this.camera.lookAt(object.position);

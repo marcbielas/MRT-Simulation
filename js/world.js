@@ -3,7 +3,7 @@ var World = Class.extend({
     init: function (args) {
         'use strict';
         // Set the different geometries composing the room
-        var ground = new THREE.PlaneGeometry(1000, 1000),
+        var ground = new THREE.PlaneGeometry(1000, 1000, 10, 10),
             height = 375,
             walls = [
                     new THREE.PlaneGeometry(ground.height, height),
@@ -15,8 +15,6 @@ var World = Class.extend({
             // Set the material, the "skin"
             leftmaterial = new THREE.MeshLambertMaterial(
                 {color: 0xff0000}),
-            floormaterial = new THREE.MeshLambertMaterial(
-                {color: 0xffff00}),
             frontmaterial = new THREE.MeshLambertMaterial(
                 {color: 0x00ff00}),
             rightmaterial = new THREE.MeshLambertMaterial(
@@ -24,11 +22,23 @@ var World = Class.extend({
             backmaterial = new THREE.MeshLambertMaterial(
                 {color: 0xff00ff}),
             i;
+        var floormaterials = []; 
+        floormaterials.push( new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.DoubleSide }) );
+        floormaterials.push( new THREE.MeshBasicMaterial( { color: 0x000000, side: THREE.DoubleSide }) );
+        var l = ground.faces.length / 2;
+
+        for( var i = 0; i < l; i ++ ) {
+            var j = i * 2; 
+            ground.faces[ j ].materialIndex = ((i + Math.floor(i/10)) % 2); 
+            ground.faces[ j + 1 ].materialIndex = ((i + Math.floor(i/10)) % 2); 
+        }
+
+
             
         // Set the "world" modelisation object
         this.mesh = new THREE.Object3D();
         // Set and add the ground
-        this.ground = new THREE.Mesh(ground, floormaterial);
+        this.ground = new THREE.Mesh( ground, new THREE.MeshFaceMaterial( floormaterials ) );
         this.ground.rotation.x = -Math.PI / 2;
         this.mesh.add(this.ground);
         // Set and add the walls

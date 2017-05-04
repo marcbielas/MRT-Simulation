@@ -137,6 +137,13 @@ var Character = Class.extend({
         // Update the directions if we intersect with an obstacle
         var freeToMove = this.collision();
 
+        if (($('input[name=sitting]:checked').val()) == "yes")
+        {
+           this.legs.left.rotation.setX(-Math.PI/2);
+           this.legs.right.rotation.setX(-Math.PI/2);
+           //this.mesh.rotation.setY(Math.PI/2);
+        }
+
         // If we're not static
         if (this.controls.up || this.controls.down || this.controls.left || this.controls.right) {
 
@@ -207,7 +214,7 @@ var Character = Class.extend({
         'use strict';
         if (($('input[name=sitting]:checked').val()) == "yes")
         {
-            //do nothing
+           // do nothing
         }
 
         else
@@ -220,13 +227,12 @@ var Character = Class.extend({
             // Now some animation trigonometry, using our "step" property ...
             this.step += 0.25;
 
-            // ... to slightly move our feet and hands
+            // Move legs, head, arms and torso
             this.legs.left.rotation.setX(Math.sin(this.step) / 2);
             this.legs.right.rotation.setX(Math.cos(this.step + (Math.PI / 2)) / 2);
-            // this.feet.left.position.setZ(this.legs.left.position.z);
-            // this.feet.right.position.setZ(this.legs.left.position.z);
-            // this.feet.left.position.setZ(15+Math.sin(- this.step) * 32);
-            // this.feet.right.position.setZ(15+Math.cos(this.step - (Math.PI / 2)) * 32);
+            this.head.translateY(Math.sin(this.step) / 2);
+            this.torso.translateY(-Math.sin(this.step) / 2);
+            
             this.arms.left.rotation.setX(Math.sin(-this.step) / 2);
             this.arms.right.rotation.setX(Math.cos(this.step - (Math.PI / 2)) / 2);
         }
